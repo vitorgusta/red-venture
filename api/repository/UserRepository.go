@@ -5,26 +5,29 @@ import (
 
 	"github.com/labstack/gommon/log"
 
-	conn "github.com/vitorgusta/red-venture/api/connection"
 	"github.com/vitorgusta/red-venture/api/dbconfig"
 	"github.com/vitorgusta/red-venture/api/models"
 	"gopkg.in/mgo.v2/bson"
 )
 
-const DBNAME = "redventure"
-
 func CreateUser(user models.User) (models.User, error) {
-	db := conn.GetSession()
+	db := dbconfig.DB{}
 	fmt.Println("vitorasidmoasidm", db)
 	log.Debug("init db", db)
 	user.Id = bson.NewObjectId()
 
-	defer db.Close()
+	s, err := db.DoDial()
 
-	c := db.DB(DBNAME).C("user")
+	if err != nil {
+		return user, err
+	}
+
+	defer s.Close()
+
+	c := s.DB(db.Name()).C("user")
 	fmt.Println(c)
 	log.Debug("init c", c)
-	err := c.Insert(user)
+	err = c.Insert(user)
 
 	if err != nil {
 		return user, err
