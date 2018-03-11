@@ -1,0 +1,17 @@
+version: "3"
+
+services:
+  mongodb:
+    image: "mongo"
+    ports: 
+     - 27017:27017
+  api:
+    build: ./api
+    volumes:
+    - ./api:/go/src/github.com/vitorgusta/red-venture/api
+    environment:
+      - MONGOHQ_URL=mongodb
+    depends_on:
+      - mongodb
+    ports: 
+     - 1323:1323
