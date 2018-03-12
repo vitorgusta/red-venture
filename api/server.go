@@ -2,8 +2,7 @@ package main
 
 import (
 	"net/http"
-
-	"github.com/vitorgusta/red-venture/api/controller"
+	"red-venture/api/controller"
 
 	"github.com/dgrijalva/jwt-go"
 	"github.com/labstack/echo"
