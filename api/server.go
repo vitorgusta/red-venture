@@ -5,16 +5,10 @@ import (
 
 	"github.com/vitorgusta/red-venture/api/controller"
 
-	auth "github.com/vitorgusta/red-venture/api/authentication"
-
 	"github.com/dgrijalva/jwt-go"
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/middleware"
 )
-
-func accessible(c echo.Context) error {
-	return c.String(http.StatusOK, "Accessible")
-}
 
 func restricted(c echo.Context) error {
 	user := c.Get("user").(*jwt.Token)
@@ -37,7 +31,7 @@ func main() {
 	// }))
 
 	// Login route
-	e.POST("/login", auth.Login)
+	e.POST("/login", controller.Login)
 
 	// Restricted group
 	r := e.Group("/restricted")
