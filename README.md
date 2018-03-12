@@ -13,7 +13,7 @@ http://localhost:1323
 ```
 
 ## The endpoints are as follows:
-*  GET `/login` [http://167.99.88.181:1323/restricted/users]
+*  GET `/login` [http://167.99.88.181:1323/login]
 *  GET `/restricted/users` [http://167.99.88.181:1323/restricted/users]
 *  GET `/restricted/users/:id` [http://167.99.88.181:1323/restricted/:id]
 *  GET `/restricted/widgets` [http://167.99.88.181:1323/restricted/widgets]
