@@ -1,8 +1,6 @@
 package repository
 
 import (
-	"fmt"
-
 	"github.com/labstack/gommon/log"
 
 	"github.com/vitorgusta/red-venture/api/dbconfig"
@@ -10,40 +8,36 @@ import (
 	"gopkg.in/mgo.v2/bson"
 )
 
-func CreateUser(user models.User) (models.User, error) {
+func CreateUser(user models.User) models.User {
 	db := dbconfig.DB{}
-	fmt.Println("vitorasidmoasidm", db)
-	log.Debug("init db", db)
 	user.Id = bson.NewObjectId()
 
 	s, err := db.DoDial()
 
 	if err != nil {
-		return user, err
+		log.Fatal(err)
 	}
 
 	defer s.Close()
 
 	c := s.DB(db.Name()).C("user")
-	fmt.Println(c)
-	log.Debug("init c", c)
 	err = c.Insert(user)
 
 	if err != nil {
-		return user, err
+		log.Fatal(err)
 	}
 
-	return user, nil
+	return user
 }
 
-func FindUserById(id string) (models.User, error) {
+func FindUserById(id string) models.User {
 	db := dbconfig.DB{}
 	user := models.User{}
 
 	s, err := db.DoDial()
 
 	if err != nil {
-		return user, err
+		log.Fatal(err)
 	}
 
 	defer s.Close()
@@ -53,34 +47,31 @@ func FindUserById(id string) (models.User, error) {
 	err = c.Find(bson.M{"_id": bson.ObjectIdHex(id)}).One(&user)
 
 	if err != nil {
-		return user, err
+		log.Fatal(err)
 	}
 
-	return user, nil
+	return user
 
 }
 
-func FindAllUsers() (models.Users, error) {
+func FindAllUsers() models.Users {
 	db := dbconfig.DB{}
 	listUser := models.Users{}
-	log.Debug("init db", db)
-	fmt.Println("vitorasidmoasidm", db)
 	s, err := db.DoDial()
 
 	if err != nil {
-		return listUser, err
+		log.Fatal(err)
 	}
 
 	defer s.Close()
 
 	c := s.DB(db.Name()).C("user")
-	fmt.Println("MONGO", c)
-	log.Debug("init c", c)
+
 	err = c.Find(bson.M{}).All(&listUser)
 
 	if err != nil {
-		return listUser, err
+		log.Fatal(err)
 	}
 
-	return listUser, nil
+	return listUser
 }

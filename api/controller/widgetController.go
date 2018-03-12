@@ -1,7 +1,6 @@
 package controller
 
 import (
-	"fmt"
 	"net/http"
 
 	model "github.com/vitorgusta/red-venture/api/models"
@@ -47,7 +46,6 @@ func UpdateWidget(c echo.Context) error {
 		return err
 	}
 
-	result, err := Repository.UpdateWidget(*w, id)
-	fmt.Println("vitor", err)
+	result := Repository.UpdateWidget(*w, id)
 	return c.JSON(http.StatusCreated, result)
 }

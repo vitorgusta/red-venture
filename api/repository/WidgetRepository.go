@@ -1,6 +1,7 @@
 package repository
 
 import (
+	"github.com/labstack/gommon/log"
 	"github.com/vitorgusta/red-venture/api/dbconfig"
 	"github.com/vitorgusta/red-venture/api/models"
 	"gopkg.in/mgo.v2/bson"
@@ -9,12 +10,12 @@ import (
 func CreateWidget(widget models.Widget) models.Widget {
 
 	db := dbconfig.DB{}
-	//widget.Id = bson.NewObjectId()
+	widget.Id = bson.NewObjectId()
 
 	s, err := db.DoDial()
 
 	if err != nil {
-		//TODO ADD LOG
+		log.Fatal(err)
 	}
 
 	defer s.Close()
@@ -24,7 +25,7 @@ func CreateWidget(widget models.Widget) models.Widget {
 	err = c.Insert(widget)
 
 	if err != nil {
-		//TODO ADD LOG
+		log.Fatal(err)
 	}
 
 	return widget
@@ -37,7 +38,7 @@ func FindWidgetById(id string) models.Widget {
 	s, err := db.DoDial()
 
 	if err != nil {
-		//TODO ADD LOG
+		log.Fatal(err)
 	}
 
 	defer s.Close()
@@ -47,7 +48,7 @@ func FindWidgetById(id string) models.Widget {
 	err = c.Find(bson.M{"_id": bson.ObjectIdHex(id)}).One(&widget)
 
 	if err != nil {
-		//TODO ADD LOG
+		log.Fatal(err)
 	}
 
 	return widget
@@ -61,7 +62,7 @@ func FindAllWidget() models.Widgets {
 	s, err := db.DoDial()
 
 	if err != nil {
-		//TODO ADD LOG
+		log.Fatal(err)
 	}
 
 	defer s.Close()
@@ -71,19 +72,19 @@ func FindAllWidget() models.Widgets {
 	err = c.Find(bson.M{}).All(&listWidget)
 
 	if err != nil {
-		//TODO ADD LOG
+		log.Fatal(err)
 	}
 
 	return listWidget
 }
 
-func UpdateWidget(widget models.Widget, id string) (models.Widget, error) {
+func UpdateWidget(widget models.Widget, id string) models.Widget {
 	db := dbconfig.DB{}
 
 	s, err := db.DoDial()
 
 	if err != nil {
-		return widget, err
+		return widget
 	}
 
 	defer s.Close()
@@ -94,8 +95,8 @@ func UpdateWidget(widget models.Widget, id string) (models.Widget, error) {
 
 	err = c.Update(colQuerier, change)
 	if err != nil {
-		return widget, err
+		log.Fatal(err)
 	}
 
-	return widget, nil
+	return widget
 }

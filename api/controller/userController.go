@@ -1,7 +1,6 @@
 package controller
 
 import (
-	"fmt"
 	"net/http"
 
 	"github.com/vitorgusta/red-venture/api/repository"
@@ -17,27 +16,20 @@ type (
 
 func CreateUser(c echo.Context) error {
 	u := new(models.User)
-
 	if err := c.Bind(u); err != nil {
 		return err
 	}
-
-	result, err := repository.CreateUser(*u)
-	fmt.Println("vitor", err)
+	result := repository.CreateUser(*u)
 	return c.JSON(http.StatusCreated, result)
 }
 
 func FindAll(c echo.Context) error {
-	result, err := repository.FindAllUsers()
-	fmt.Println("testeseila", err)
-
+	result := repository.FindAllUsers()
 	return c.JSON(http.StatusOK, result)
 }
 
 func FindById(c echo.Context) error {
 	id := c.Param("id")
-
-	result, err := repository.FindUserById(id)
-	fmt.Println("teste", err)
+	result := repository.FindUserById(id)
 	return c.JSON(http.StatusOK, result)
 }

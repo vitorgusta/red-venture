@@ -39,9 +39,6 @@ func main() {
 	// Login route
 	e.POST("/login", auth.Login)
 
-	// Unauthenticated route
-	e.GET("/", accessible)
-
 	// Restricted group
 	r := e.Group("/restricted")
 	r.Use(middleware.JWT([]byte("secret")))
