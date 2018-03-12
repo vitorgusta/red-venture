@@ -12,7 +12,7 @@ func Login(c echo.Context) error {
 	username := c.FormValue("username")
 	password := c.FormValue("password")
 
-	if username == "jon" && password == "shhh!" {
+	if username == "redventure" && password == "redventure123" {
 		// Create token
 		token := jwt.New(jwt.SigningMethodHS256)
 
