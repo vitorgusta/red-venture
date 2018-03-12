@@ -11,8 +11,6 @@ docker-compose up
 http://localhost:1323
 ```
 
-## Code Challenge by Booming Games
-
 ## The endpoints are as follows:
 * ** GET `/users` [http://167.99.88.181:1323/restricted/users](http://spa.tglrw.com:4000/users)
 * ** GET `/users/:id` [http://167.99.88.181:1323/restricted/:id](http://spa.tglrw.com:4000/users/:id)
